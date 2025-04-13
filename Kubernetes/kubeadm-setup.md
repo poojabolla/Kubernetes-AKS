@@ -36,19 +36,6 @@ sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/conf
 sudo systemctl restart containerd
 ```
 
-**Setup Containerd**
-
-```bash
-sudo mkdir -p /etc/containerd
-containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
-sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-```
-Then restart containerd
-
-```bash
-sudo systemctl restart containerd
-```
-
 ---
 
 **On both Master and node**
@@ -68,7 +55,6 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 **Initialise cluster - only on master**
-**Initialise cluster - only on master**
 
 ```bash
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
@@ -81,6 +67,11 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
+Enter the join command onto the nodes
+
+`Note`: In case you want to retrieve the join token use the below-mentioned command.
+kubeadm token create --print-join-command
+
 **Install Network Add-on**
 
 `Note:` You must deploy a Container Network Interface (CNI) based Pod network add-on so that your Pods can communicate with each other. Cluster DNS (CoreDNS) will not start up before a network is installed.
@@ -88,11 +79,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```bash
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 ```
-
-Enter the join command onto the nodes
-
-`Note`: In case you want to retrieve the join token use the below-mentioned command.
-kubeadm token create --print-join-command
 
 ---
 
