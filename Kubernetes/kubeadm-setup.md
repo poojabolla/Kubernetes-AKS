@@ -21,6 +21,20 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 sudo docker run hello-world
 ```
+**Setup Containerd**
+
+```bash
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+```
+#Make sure to change the sandbox_image to 3.10
+`[plugins."io.containerd.grpc.v1.cri"]
+  sandbox_image = "registry.k8s.io/pause:3.10"`
+
+```bash
+sudo systemctl restart containerd
+```
 
 **Setup Containerd**
 
@@ -53,6 +67,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
+**Initialise cluster - only on master**
 **Initialise cluster - only on master**
 
 ```bash
