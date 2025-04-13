@@ -54,4 +54,10 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 sudo docker run hello-world
 ```
 
+Docker buildx installation for building docker images
+
+```bash
+sudo apt install docker-buildx
+```
+
 Ref: https://docs.docker.com/engine/install/ubuntu/

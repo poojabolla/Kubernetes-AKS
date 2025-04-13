@@ -34,8 +34,6 @@ With Kubernetes:
 
 ## 🖼️ Architecture Overview
 
-> 📌 **Suggested Diagram**: Kubernetes Architecture
-
 ### 🔷 1. Control Plane
 
 Handles the overall cluster management:

@@ -21,6 +21,23 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 sudo docker run hello-world
 ```
+<<<<<<< HEAD
+=======
+**Setup Containerd**
+
+```bash
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+```
+Restart Containerd 
+
+```bash
+sudo systemctl restart containerd
+```
+>>>>>>> 44405b1 (updated)
+
+---
 
 **On both Master and node**
 
@@ -38,37 +55,37 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
-**Setup Containerd**
-
-```bash
-sudo mkdir -p /etc/containerd
-containerd config default | sudo tee /etc/containerd/config.toml
-
-sudo vi /etc/containerd/config.toml
-```
-#Make sure to change the sandbox_image to 3.10
-`[plugins."io.containerd.grpc.v1.cri"]
-  sandbox_image = "registry.k8s.io/pause:3.10"`
-
-```bash
-sudo systemctl restart containerd
-```
 **Initialise cluster - only on master**
 
 ```bash
-sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
-Enter the jon command onto the nodes
+**Setup kubeconfig to start using the cluster**
+```bash
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
-`Note`: In case we want to retrieve the join token use the below-mentioned command.
+Enter the join command onto the nodes
+
+`Note`: In case you want to retrieve the join token use the below-mentioned command.
 kubeadm token create --print-join-command
+
+**Install Network Add-on**
+
+`Note:` You must deploy a Container Network Interface (CNI) based Pod network add-on so that your Pods can communicate with each other. Cluster DNS (CoreDNS) will not start up before a network is installed.
+
+```bash
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+```
 
 ---
 
 **Ingress Controller**
 
-## Nignx
+## Nginx
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.1/deploy/static/provider/cloud/deploy.yaml
@@ -77,4 +94,18 @@ A few pods should start in the `ingress-nginx` namespace:
 
 ```bash
 kubectl get pods --namespace=ingress-nginx
+```
+
+---
+
+**Reset Cluster**
+
+```bash
+sudo kubeadm reset
+
+sudo rm -rf /etc/cni/net.d
+sudo rm -rf /var/lib/cni/
+sudo rm -rf /var/lib/kubelet/*
+sudo rm -rf /etc/kubernetes/
+sudo rm -rf ~/.kube
 ```
