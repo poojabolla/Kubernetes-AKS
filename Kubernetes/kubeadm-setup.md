@@ -58,17 +58,10 @@ sudo apt-mark hold kubelet kubeadm kubectl
 **Initialise cluster - only on master**
 
 ```bash
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 ```
 
-**Setup kubeconfig to start using the cluster**
-```bash
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-```
-
-Enter the join command onto the nodes
+Enter the jon command onto the nodes
 
 `Note`: In case you want to retrieve the join token use the below-mentioned command.
 kubeadm token create --print-join-command
