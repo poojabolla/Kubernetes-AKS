@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 200
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      nodeName: aks-nodepool1-29830130-vmss000000
+      priorityClassName: high-priority
+      containers:
+      - name: nginx
+        image: nginx

@@ -1,0 +1,6 @@
+replicas: 2
+appName: myapp
+image: nginx 
+port: 80
+isDeploy: true
+service: true
