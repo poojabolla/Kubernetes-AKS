@@ -21,8 +21,6 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 sudo docker run hello-world
 ```
-<<<<<<< HEAD
-=======
 **Setup Containerd**
 
 ```bash
@@ -35,7 +33,6 @@ Restart Containerd
 ```bash
 sudo systemctl restart containerd
 ```
->>>>>>> 44405b1 (updated)
 
 ---
 

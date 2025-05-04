@@ -1,13 +1,4 @@
-
----
-title: "End-to-End CI/CD Pipeline on Azure: AKS + ACR + Key Vault + Azure DevOps"
-date: May 01, 2025
-description: "From code commit to containerized deployment — harness the full power of Azure DevOps, AKS, ACR, and Key Vault in one streamlined pipeline."
----
-
 # 🚀 End-to-End CI/CD Pipeline on Azure: AKS + ACR + Key Vault + Azure DevOps
-
-*From code commit to containerized deployment — harness the full power of Azure DevOps, AKS, ACR, and Key Vault in one streamlined pipeline.*
 
 ---
 
